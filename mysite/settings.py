@@ -48,7 +48,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -117,8 +117,10 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 # STATIC_URL = 'static/'
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR.joinpath('myapp', 'static')
+import os
+cwd = os.path.join(os.getcwd())
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(cwd, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -127,12 +129,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-CSP_DEFAULT_SRC = ["'self'",]
-CSP_SCRIPT_SRC = ["'self'",]
-CSP_FONT_SRC = ['https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/webfonts/']
+# CSP_DEFAULT_SRC = ["'self'",]
+# CSP_SCRIPT_SRC = ["'self'",]
+# CSP_FONT_SRC = ['https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/webfonts/']
 
 # 允許外部嵌入
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 # X_FRAME_OPTIONS = 'ALLOWALL'
 
 # XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
+SECURE_CONTENT_TYPE_NOSNIFF = False
+
+import mimetypes
+mimetypes.add_type('text/css', '.css')
+mimetypes.add_type('application/javascript', 'js')

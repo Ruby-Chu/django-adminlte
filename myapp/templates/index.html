@@ -22,7 +22,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
-            <img src="{% static 'dist/img/profile.png' %}" alt="demo" class="brand-image img-circle elevation-3"
+            <img src="{% static 'imgs/user.png' %}" alt="demo" class="brand-image img-circle elevation-3"
                  style="opacity: .8">
             <span class="brand-text font-weight-light">DEMO</span>
         </a>
@@ -33,12 +33,28 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
-                    {% for k, v in webinfo.items %}
+                    {% for info in webinfo %}
                     <li class="nav-item">
-                        <a href="{{ v }}" class="nav-link">
+                        <a href="{{ info.url }}" class="nav-link">
                             <i class="nav-icon far fa-circle text-danger"></i>
-                            <p class="text">{{ k }}</p>
+                            {% if info.second %}
+                            <p class="text">{{ info.name }}<i class="right fas fa-angle-left"></i></p>
+                            {% else %}
+                            <p class="text">{{ info.name }}</p>
+                            {% endif %}
                         </a>
+                        {% if info.second %}
+                        <ul class="nav nav-treeview">
+                            {% for s in info.second %}
+                            <li class="nav-item">
+                                <a href="{{ s.url }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>&nbsp;{{ s.name }}</p>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
                     </li>
                     {% endfor %}
                 </ul>
